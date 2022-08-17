@@ -39,6 +39,39 @@
 
     <br />
     <br />
-    <script src="index.mjs"></script>
+
+    <script>
+      function signup() {
+        var firstName = document.getElementById("firstName").value;
+        var lastName = document.getElementById("lastName").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var repeatPassword = document.getElementById("repeatPassword").value;
+
+        if (password !== repeatPassword) {
+          document.querySelector("#message").innerHTML =
+            "Passwords do not match, please try again";
+          return;
+        }
+
+        axios
+          .post("http://localhost:3000/signup", {
+            firstName,
+            lastName,
+            email,
+            password,
+          })
+          .then(function (response) {
+            console.log(response.data);
+            document.querySelector("#message").innerHTML =
+              response.data.message;
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+            document.querySelector("#message").innerHTML =
+              error.response.data.message;
+          });
+      }
+    </script>
   </body>
 </html>
