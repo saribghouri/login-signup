@@ -8,7 +8,7 @@ app.use(cors());
 
 const port = process.env.PORT || 3000;
 
-let userBase = [];
+let userBase = []; // TODO: replace this with mongoDB
 
 app.post("/signup", (req, res) => {
   let body = req.body;
@@ -35,6 +35,7 @@ app.post("/signup", (req, res) => {
     }
   }
   if (isFound) {
+    // this email already exist
     res.status(400).send({
       message: `email ${body.email} already exist.`,
     });
@@ -68,17 +69,20 @@ app.post("/login", (req, res) => {
     return;
   }
 
-  let isFound = false;
+  let isFound = false; // https://stackoverflow.com/a/17402180/4378475
 
   for (let i = 0; i < userBase.length; i++) {
     if (userBase[i].email === body.email) {
       isFound = true;
       if (userBase[i].password === body.password) {
+        // correct password
+
         res.status(200).send({
           firstName: userBase[i].firstName,
           lastName: userBase[i].lastName,
           email: userBase[i].email,
           message: "login successful",
+          token: "some unique token",
         });
         return;
       } else {
