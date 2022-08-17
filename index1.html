@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <center><h1>LOGIN FORM</h1></center>
+    <form id="user" onsubmit="adduser(event)">
+      <div class="container">
+        <label>Email : </label>
+        <input
+          id="email"
+          type="text"
+          placeholder="Enter Username"
+          name="username"
+          required
+        />
+        <label>Password : </label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required
+        />
+        <button type="submit">Login</button>
+
+        Forgot <a href="#">password?</a>
+        <br />
+      </div>
+    </form>
+    <script src="index.js"></script>
+  </body>
+</html>
