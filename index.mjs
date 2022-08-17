@@ -103,3 +103,7 @@ app.post("/login", (req, res) => {
     return;
   }
 });
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
