@@ -3,8 +3,8 @@ import cors from "cors";
 import { nanoid } from "nanoid";
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 const port = process.env.PORT || 3000;
 
@@ -51,7 +51,7 @@ app.post("/signup", (req, res) => {
   };
 
   userBase.push(newUser);
-  console.log(newUser);
+
   res.status(201).send({ message: "user is created" });
 });
 
@@ -102,9 +102,6 @@ app.post("/login", (req, res) => {
     });
     return;
   }
-});
-app.get("/", (req, res) => {
-  res.send("Hello World!");
 });
 
 app.listen(port, () => {

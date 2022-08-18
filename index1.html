@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login Page</title>
+    <link rel="stylesheet" href="index1.css" />
   </head>
   <body>
     <center><h1>LOGIN FORM</h1></center>
@@ -30,20 +31,15 @@
         <br />
         <a class="signbtn" href="index1.html">signup</a>
       </div>
+      <p id="message"></p>
     </form>
     <script>
-      function Login() {
+      function login() {
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
 
-        if (!password) {
-          document.querySelector("#message").innerHTML =
-            "Passwords do not match, please try again";
-          return;
-        }
-
         axios
-          .post("http://localhost:3000/Login", {
+          .post("https://login-signup-123.herokuapp.com/login", {
             email,
             password,
           })
