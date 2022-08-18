@@ -5,73 +5,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
 
   <body>
-    <h1>Signup Form</h1>
-
+    
     <form onsubmit="signup(); return false ">
-      <label for="firstName">First Name</label>
-      <input type="text" id="firstName" required />
-      <br />
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-5">
+            <div class="card">
+           <h1 id="h1">Signup Form</h1>
+     
+            <div class="card-body py-md-4">
+             <form _lpchecked="1">
+                <div class="form-group">
+                   <input type="text" class="form-control" id="firstName" placeholder="firstName">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="lastName" placeholder="lastName">
+           </div>
+              <div class="form-group">
+                   <input type="email" class="form-control" id="email" placeholder="Email">
+                                  </div>
+                                  
+                                
+         <div class="form-group">
+           <input type="password" class="form-control" id="password" placeholder="Password">
+         </div>
+         <div class="form-group">
+            <input type="password" class="form-control" id="confirm-password" placeholder="confirm-password">
+         </div>
+         <div class="d-flex flex-row align-items-center justify-content-between">
+           
+           <button class="btn btn-primary">Create Account</button>
+                </div>
+             </form>
+           </div>
+        </div>
+      </div>
+      <p id="message"></p>
+      </div>
+      </div>
+ 
+    <center><h1>LOGIN FORM</h1></center>
+    <form id="user" onsubmit="login(event)">
+      <div class="container">
+        <label>Email : </label>
+        <input
+          id="email"
+          type="text"
+          placeholder="Enter Username"
+          name="username"
+          required
+        />
+        <label>Password : </label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required
+        />
+        <button type="submit">Login</button>
 
-      <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" required />
-      <br />
-
-      <label for="email">Email</label>
-      <input type="email" id="email" required />
-      <br />
-
-      <label for="password">Password</label>
-      <input type="password" id="password" required />
-      <br />
-
-      <label for="repeatPassword">Repeat Password</label>
-      <input type="password" id="repeatPassword" required />
-      <br />
-
-      <input type="submit" value="Signup" />
+        <br />
+      </div>
+      <p id="message1"></p>
     </form>
 
-    <p id="message"></p>
+    <script src="index.js"></script>
 
-    <br />
-    <br />
-
-    <script>
-      function signup() {
-        var firstName = document.getElementById("firstName").value;
-        var lastName = document.getElementById("lastName").value;
-        var email = document.getElementById("email").value;
-        var password = document.getElementById("password").value;
-        var repeatPassword = document.getElementById("repeatPassword").value;
-
-        if (password !== repeatPassword) {
-          document.querySelector("#message").innerHTML =
-            "Passwords do not match, please try again";
-          return;
-        }
-
-        axios
-          .post("https://login-signup-123.herokuapp.com/signup", {
-            firstName,
-            lastName,
-            email,
-            password,
-          })
-          .then(function (response) {
-            console.log(response.data);
-            document.querySelector("#message").innerHTML =
-              response.data.message;
-          })
-          .catch(function (error) {
-            console.log(error.response.data);
-            document.querySelector("#message").innerHTML =
-              error.response.data.message;
-          });
-      }
-    </script>
   </body>
 </html>

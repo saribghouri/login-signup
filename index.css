@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css?family=PT+Sans");
+
+body {
+  background: rgb(58, 58, 58);
+  font-family: "PT Sans", sans-serif;
+}
+h2 {
+  padding-top: 1.5rem;
+
+  text-align: center;
+}
+
+a {
+  color: #333;
+}
+a:hover {
+  color: #0e70b0;
+  text-decoration: none;
+}
+.card {
+  top: 10%;
+}
+.form-control {
+  background-color: #f8f9fa;
+  padding: 20px;
+  padding: 25px 15px;
+  margin-bottom: 1.3rem;
+  width: 89%;
+}
+
+.form-control:focus {
+  color: #000000;
+  background-color: #ffffff;
+  border: 3px solid #da5767;
+  outline: 0;
+  box-shadow: none;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  background: #105392;
+  border: 2px solid #515151;
+  color: #f8f9fa;
+  width: 100%;
+}
+.btn-primary:hover {
+  border-color: #e0e0e0;
+  transition: 0.3s;
+}
+
+.card-body {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* width: 101%; */
+}
+
+#h1 {
+  text-align: center;
+  font-size: 50px;
+  font-family: sans-serif;
+  color: #cecece;
+}
+#message1 {
+  color: rgb(107, 107, 107);
+  font-size: 40px;
+  text-align: center;
+}
+::placeholder {
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
+}
+
+Body {
+  font-family: Calibri, Helvetica, sans-serif;
+  background: #5b5b5b;
+  align-items: center;
+  width: 50%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
+}
+
+button {
+  background: #2b519a;
+  width: 100%;
+  color: orange;
+  padding: 15px;
+  margin: 10px 0px;
+  border: none;
+  cursor: pointer;
+}
+form {
+  border: 3px solid #f1f1f1;
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px 20px;
+  display: inline-block;
+  /* border: 2px solid green;    */
+  box-sizing: border-box;
+}
+button:hover {
+  opacity: 0.7;
+}
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  margin: 10px 5px;
+}
+
+.container {
+  padding: 25px;
+  background-color: rgb(178, 188, 192);
+  /* position: absolute; */
+}
+
+.signbtn {
+  width: 10%;
+  color: black;
+  font-size: large;
+  padding: 5px;
+  margin-top: 20px;
+}
