@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <center><h1>LOGIN FORM</h1></center>
+    <form id="user" onsubmit="adduser(event)">
+      <div class="container">
+        <label>Email : </label>
+        <input
+          id="email"
+          type="text"
+          placeholder="Enter Username"
+          name="username"
+          required
+        />
+        <label>Password : </label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required
+        />
+        <button type="submit">Login</button>
+
+        Forgot <a href="#">password?</a>
+        <br />
+        <a class="signbtn" href="index1.html">signup</a>
+      </div>
+    </form>
+    <script>
+      function Login() {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        if (!password) {
+          document.querySelector("#message").innerHTML =
+            "Passwords do not match, please try again";
+          return;
+        }
+
+        axios
+          .post("http://localhost:3000/Login", {
+            email,
+            password,
+          })
+          .then(function (response) {
+            console.log(response.data);
+            document.querySelector("#message").innerHTML =
+              response.data.message;
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+            document.querySelector("#message").innerHTML =
+              error.response.data.message;
+          });
+      }
+    </script>
+  </body>
+</html>
