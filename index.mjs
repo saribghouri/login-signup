@@ -4,11 +4,17 @@ import { nanoid } from "nanoid";
 import mongoose from "mongoose";
 
 let dbURI =
-  "mongodb+srv://sarib-ghouri92:445500@cluster0.nmgizsx.mongodb.net/serviceDataBase?retryWrites=true&w=majority";
+  "mongodb+srv://sarib-ghouri92:445500@cluster0.nmgizsx.mongodb.net/seviceDataBase?retryWrites=true&w=majority";
 
-mongoose.connect(dbURI);
+mongoose
+  .connect(dbURI)
+  .then(() => {
+    console.log(`connection successful`);
+  })
+  .catch((err) => console.log(`no connection`,err));
 
-mongoose.connection.on("connected", function () {
+mongoose.connection.on("connected",
+ function () {
   console.log("Mongoose is connected");
 });
 mongoose.connection.on("disconnected", function () {
@@ -29,40 +35,20 @@ process.on("SIGINT", function () {
   });
 });
 
-require("./model/post");
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-const post = mongoose.model("post");
-
-// app.get("/signup", async (req, res) => {
-//   try {
-//     const posts = await post.find({});
-//     res.send(posts);
-//   } catch (error) {
-//     res.status(500);
-//   }
-// });
-// app.post("/login", (req, res) => {
-//   console.log(req.body);
-// });
 
 const port = process.env.PORT || 3000;
 
 let userBase = []; // TODO: replace this with mongoDB
 
-app.get("/signup", async (req, res) => {
-  try {
-    const posts = await post.find({});
-    res.send(posts);
-  } catch (error) {
-    res.status(500);
-  }
+app.post("/signup", (req, res) => {
+  let body = req.body;
 
   if (!body.firstName || !body.lastName || !body.email || !body.password) {
     res.status(400).send(
-      `required fields missing, request example:
+      `required fields missing, request example: 
                 {
                     "firstName": "John",
                     "lastName": "Doe",
@@ -102,19 +88,12 @@ app.get("/signup", async (req, res) => {
   res.status(201).send({ message: "user is created" });
 });
 
-app.post("/login", async (req, res) => {
-  try {
-    const post = new post();
-    post.title = req.body.title;
-    post.content = req.body.content;
-    await post.save();
-    res.send(post);
-  } catch (error) {
-    res.status(500);
-  }
+app.post("/login", (req, res) => {
+  let body = req.body;
+
   if (!body.email || !body.password) {
     res.status(400).send(
-      `required fields missing, request example:
+      `required fields missing, request example: 
                 {
                     "email": "abc@abc.com",
                     "password": "12345"
@@ -158,9 +137,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });

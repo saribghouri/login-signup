@@ -32,7 +32,6 @@ function login(event) {
 
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
-  console.log(password);
 
   axios
     .post("https://login-signup-123.herokuapp.com/login", {
