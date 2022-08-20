@@ -1,146 +1,46 @@
-import express from "express";
-import cors from "cors";
-import { nanoid } from "nanoid";
-import mongoose from "mongoose";
-
-let dbURI =
-  "mongodb+srv://sarib-ghouri92:445500@cluster0.nmgizsx.mongodb.net/seviceDataBase?retryWrites=true&w=majority";
-
-mongoose
-  .connect(dbURI)
-  .then(() => {
-    console.log(`connection successful`);
-  })
-  .catch((err) => console.log(`no connection`,err));
-
-mongoose.connection.on("connected",
- function () {
-  console.log("Mongoose is connected");
+var express = require("express");
+var router = express.Router();
+import mongoose, { mongo } from "mongoose";
+import { equal } from "assert";
+import { assert } from "console";
+var url =
+  "mongodb+srv://<username>:445500@cluster0.nmgizsx.mongodb.net/ ?retryWrites=true&w=majority";
+/* GET home page. */
+router.get("/", function (req, res, next) {
+  res.render("index");
 });
-mongoose.connection.on("disconnected", function () {
-  console.log("Mongoose is disconnected");
-  process.exit(1);
-});
+router.get("/get-data", function (req, res, next) {
+  var resultArray = [];
+  mongo.connect(url, function (err, db) {
+    equal(null, err);
+    var cursor = db.collection("user-data").find();
+    cursor.forEach(
+      function (doc, err) {
+        assert.equal(null, err);
+        resultArray.push(doc);
+      },
+      function () {
+        db.close();
 
-mongoose.connection.on("error", function (err) {
-  console.log("Mongoose connection error: ", err);
-  process.exit(1);
-});
-
-process.on("SIGINT", function () {
-  console.log("app is terminating");
-  mongoose.connection.close(function () {
-    console.log("Mongoose default connection closed");
-    process.exit(0);
+        res.render("index", { items: resultArray });
+      }
+    );
   });
 });
 
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-const port = process.env.PORT || 3000;
-
-let userBase = []; // TODO: replace this with mongoDB
-
-app.post("/signup", (req, res) => {
-  let body = req.body;
-
-  if (!body.firstName || !body.lastName || !body.email || !body.password) {
-    res.status(400).send(
-      `required fields missing, request example: 
-                {
-                    "firstName": "John",
-                    "lastName": "Doe",
-                    "email": "abc@abc.com",
-                    "password": "12345"
-                }`
-    );
-    return;
-  }
-
-  let isFound = false;
-
-  for (let i = 0; i < userBase.length; i++) {
-    if (userBase[i].email === body.email.toLowerCase()) {
-      isFound = true;
-      break;
-    }
-  }
-  if (isFound) {
-    // this email already exist
-    res.status(400).send({
-      message: `email ${body.email} already exist.`,
-    });
-    return;
-  }
-
-  let newUser = {
-    userId: nanoid(),
-    firstName: body.firstName,
-    lastName: body.lastName,
-    email: body.email.toLowerCase(),
-    password: body.password,
+router.post("/insert", function (req, res, next) {
+  var item = {
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author,
   };
-
-  userBase.push(newUser);
-
-  res.status(201).send({ message: "user is created" });
-});
-
-app.post("/login", (req, res) => {
-  let body = req.body;
-
-  if (!body.email || !body.password) {
-    res.status(400).send(
-      `required fields missing, request example: 
-                {
-                    "email": "abc@abc.com",
-                    "password": "12345"
-                }`
-    );
-    return;
-  }
-
-  let isFound = false; // https://stackoverflow.com/a/17402180/4378475
-
-  for (let i = 0; i < userBase.length; i++) {
-    if (userBase[i].email === body.email) {
-      isFound = true;
-      if (userBase[i].password === body.password) {
-        // correct password
-
-        res.status(200).send({
-          firstName: userBase[i].firstName,
-          lastName: userBase[i].lastName,
-          email: userBase[i].email,
-          message: "login successful",
-          token: "some unique token",
-        });
-        return;
-      } else {
-        // password incorrect
-
-        res.status(401).send({
-          message: "incorrect password",
-        });
-        return;
-      }
-    }
-  }
-
-  if (!isFound) {
-    res.status(404).send({
-      message: "user not found",
+  mongo.connect(url, function (err, db) {
+    assert.equal(null, err);
+    db.collection("user-data").insertOne(item, function (err, result) {
+      assert, equal(null, error);
+      console.log("item inserted");
+      db.close();
     });
-    return;
-  }
+  });
 });
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+////////////////////////////////////////////////////////////////
