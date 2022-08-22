@@ -32,7 +32,7 @@ function signup() {
   }
 
   axios
-    .post("https://login-signup-123.herokuapp.com//signup", {
+    .post("https://login-signup-123.herokuapp.com/signup", {
       firstName,
       lastName,
       email,
