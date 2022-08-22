@@ -12,7 +12,7 @@ function signup() {
   }
 
   axios
-    .post("https://login-signup-123.herokuapp.com/signup", {
+    .post("http://localhost:3000/signup", {
       firstName,
       lastName,
       email,
@@ -34,7 +34,7 @@ function login(event) {
   var password = document.getElementById("password").value;
 
   axios
-    .post("https://login-signup-123.herokuapp.com/login", {
+    .post("http://localhost:3000/login", {
       email,
       password,
     })
