@@ -43,7 +43,7 @@ function login(event) {
       document.querySelector("#message1").innerHTML = response.data.message;
     })
     .catch(function (error) {
-      console.log(error.response.data);
+      console.log("dsabedwb", error.response.data);
       document.querySelector("#message1").innerHTML =
         error.response.data.message;
     });

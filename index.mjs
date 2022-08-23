@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
+import { nanoid } from "nanoid";
 import mongoose from "mongoose";
+import { stringToHash, varifyHash } from "bcrypt-inzi";
 
 const app = express();
 app.use(express.json());
@@ -13,6 +15,9 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String },
   email: { type: String, required: true },
   password: { type: String, required: true },
+
+  age: { type: Number, min: 17, max: 65, default: 18 },
+  isMarried: { type: Boolean, default: false },
 
   createdOn: { type: Date, default: Date.now },
 });
@@ -42,9 +47,11 @@ app.post("/signup", (req, res) => {
       if (data) {
         // user already exist
         console.log("user already exist: ", data);
-        res.status(400).send({
-          message: "user already exist,, please try a different email",
-        });
+        res
+          .status(400)
+          .send({
+            message: "user already exist,, please try a different email",
+          });
         return;
       } else {
         // user not already exist
